@@ -1,8 +1,11 @@
-package nightmare.common;
+package nightmare.common.blocks;
 
 import java.util.List;
 import java.util.ArrayList;
 import net.minecraft.src.*;
+import nightmare.common.NightmareTeleporter;
+import nightmare.common.mod_Nightmare;
+import nightmare.common.world.WorldProviderNightmare;
 
 public class BlockPortalNightmare extends BlockPortalBase implements ISpecialTeleportation{
 	// Look in BlockPortalBase.java to see the full array of hooks you can use
@@ -14,6 +17,11 @@ public class BlockPortalNightmare extends BlockPortalBase implements ISpecialTel
 		// override another
 		// texture.
 		this.setCreativeTab(CreativeTabs.tabBlock);
+	}
+	
+	public String getTextureFile()
+	{
+		return "/Blocks/NightmareTextures.png";
 	}
 
 	public WorldProviderBase getDimension() 

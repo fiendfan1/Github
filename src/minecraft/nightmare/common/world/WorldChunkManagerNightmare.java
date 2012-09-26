@@ -1,7 +1,8 @@
-package nightmare.common;
+package nightmare.common.world;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.src.*;
+import nightmare.common.mod_Nightmare;
 
 public class WorldChunkManagerNightmare implements IChunkProvider
 {

@@ -1,4 +1,4 @@
-package nightmare.common;
+package nightmare.common.world;
 
 import java.util.List;
 import java.util.Random;
@@ -7,6 +7,7 @@ import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.WorldGenShrub;
 import net.minecraft.src.WorldGenTrees;
 import net.minecraft.src.WorldGenerator;
+import nightmare.common.mod_Nightmare;
 
 public class BiomeGenNightmare extends BiomeGenBase
 {

@@ -1,9 +1,10 @@
-package nightmare.common;
+package nightmare.common.world;
 import java.util.Random;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldGenerator;
+import nightmare.common.mod_Nightmare;
 
 public class WorldGenNightmareTrees extends WorldGenerator
 {

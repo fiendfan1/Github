@@ -1,4 +1,4 @@
-package nightmare.common;
+package nightmare.client;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ModLoader;

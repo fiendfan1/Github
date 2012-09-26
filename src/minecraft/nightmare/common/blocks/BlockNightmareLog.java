@@ -1,13 +1,18 @@
-package nightmare.common;
+package nightmare.common.blocks;
 
 import java.util.Random;
 
-import net.minecraft.src.*;
+import net.minecraft.src.Block;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.Material;
+import net.minecraft.src.World;
+import nightmare.common.NightmareBlock;
+import nightmare.common.mod_Nightmare;
 
-public class BlockNightmareLog extends Block{
-	protected BlockNightmareLog(int par1)
+public class BlockNightmareLog extends NightmareBlock{
+	public BlockNightmareLog(int par1,int par2)
     {
-        super(par1, Material.wood);
+        super(par1, par2, Material.wood);
         blockIndexInTexture = 20;
     }
 
@@ -74,30 +79,13 @@ public class BlockNightmareLog extends Block{
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    public int getBlockTextureFromSideAndMetadata(int i, int j)  
+    public int getBlockTextureFromSide(int i)  
     {
     	if(i == 0)
-			return mod_Nightmare.logTop; //This is the bottom of the log
+    		return this.blockIndexInTexture +1;
 		if(i == 1)
-			return mod_Nightmare.logTop; //This is the top
-		if(i == 2)
-			return mod_Nightmare.logSide; //These are the sides
-		if(i == 3)
-			return mod_Nightmare.logSide;
-		if(i == 4)
-			return mod_Nightmare.logSide;
-		if(i == 5)
-			return mod_Nightmare.logSide;
-		
-        if(j == 1)
-        {
-            return 116;
-        }
-        return j != 2 ? 20 : 117;
-    }
-    
-    protected int damageDropped(int par1)
-    {
-        return par1;
+			return this.blockIndexInTexture+1;
+		else
+			return this.blockIndexInTexture;
     }
 }

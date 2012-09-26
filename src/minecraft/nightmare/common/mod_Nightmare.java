@@ -1,19 +1,27 @@
 package nightmare.common;
-import java.util.Random;
-
-import net.minecraft.src.BaseMod;
 import net.minecraft.src.BiomeGenBase;
+import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.DimensionAPI;
 import net.minecraft.src.EnumCreatureType;
-import net.minecraft.src.ItemTeleporterBase;
+import net.minecraft.src.Item;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.World;
-
-import cpw.mods.fml.common.*;
-import cpw.mods.fml.common.Mod.*;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.network.*;
+import net.minecraftforge.client.MinecraftForgeClient;
+import nightmare.common.blocks.BlockBed;
+import nightmare.common.blocks.BlockNightmareGrass;
+import nightmare.common.blocks.BlockNightmareLeaf;
+import nightmare.common.blocks.BlockNightmareLog;
+import nightmare.common.blocks.BlockNightmareStone;
+import nightmare.common.blocks.BlockPortalNightmare;
+import nightmare.common.entities.EntityBiped;
+import nightmare.common.items.ItemNightmare;
+import nightmare.common.items.ItemTeleportStick;
+import nightmare.common.world.BiomeGenNightmare;
+import nightmare.common.world.WorldProviderNightmare;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -22,14 +30,14 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class mod_Nightmare
 {
-	public static net.minecraft.src.Block nightmareGrass;
-	public static net.minecraft.src.Block nightmareStone;
-	public static net.minecraft.src.Block nightmareLog;
-	public static net.minecraft.src.Block nightmareLeaf;
-	public static net.minecraft.src.Block nightmareBed;
-	public static BlockPortalNightmare nightmarePortal;
-	public static net.minecraft.src.Item nightmareTeleportStick;
-	public static net.minecraft.src.Item nightmareItem;
+	public static final Block nightmareGrass = new BlockNightmareGrass(230, 0).setHardness(5F).setResistance(5F).setBlockName("NightMareGrass");
+	public static final Item nightmareTeleportStick = new ItemTeleportStick(235).setIconIndex(0).setItemName("TPStick").setTabToDisplayOn(CreativeTabs.tabMisc);
+	public static final Item nightmareItem = new ItemNightmare(236).setIconIndex(0).setItemName("TPtick").setTabToDisplayOn(CreativeTabs.tabMisc);
+	public static final Block nightmareBed = new BlockBed(234).setHardness(5F).setResistance(5F).setBlockName("NightMareBed").setCreativeTab(CreativeTabs.tabBlock);
+	public static final Block nightmareStone = new BlockNightmareStone(231, ModLoader.addOverride("/terrain.png", "/Blocks/nightmareStone.png")).setHardness(5F).setResistance(5F).setBlockName("NightMareStone");
+	public static final Block nightmareLog = new BlockNightmareLog(232, 3).setHardness(5F).setResistance(5F).setBlockName("NightMareLog").setCreativeTab(CreativeTabs.tabBlock);
+	public static final Block nightmareLeaf = new BlockNightmareLeaf(233, 52).setHardness(5F).setResistance(5F).setBlockName("NightMareLog").setCreativeTab(CreativeTabs.tabBlock);
+	public static final Block nightmarePortal = new BlockPortalNightmare(216).setHardness(0F).setResistance(0F).setBlockName("NightMarePortal").setCreativeTab(CreativeTabs.tabBlock);
 	
 	
 	public static int grassTop;
@@ -48,24 +56,17 @@ public class mod_Nightmare
 	@Init
 	public void load(FMLInitializationEvent event)
 	{
-		nightmareGrass = new BlockNightmareGrass(230, 0).setHardness(5F).setResistance(5F).setBlockName("NightMareGrass");
-		nightmareTeleportStick = new ItemTeleportStick(235).setItemName("TPStick").setTabToDisplayOn(CreativeTabs.tabMisc);
-		nightmareItem = new ItemNightmare(236).setItemName("TPtick").setTabToDisplayOn(CreativeTabs.tabMisc);
-		nightmareBed = new BlockBed(234).setHardness(5F).setResistance(5F).setBlockName("NightMareBed").setCreativeTab(CreativeTabs.tabBlock);
-		nightmareStone = new BlockNightmareStone(231, ModLoader.addOverride("/terrain.png", "/Blocks/nightmareStone.png")).setHardness(5F).setResistance(5F).setBlockName("NightMareStone");
-		nightmareLog = new BlockNightmareLog(232).setHardness(5F).setResistance(5F).setBlockName("NightMareLog").setCreativeTab(CreativeTabs.tabBlock);
-		nightmareLeaf = new BlockNightmareLeaf(233, 52).setHardness(5F).setResistance(5F).setBlockName("NightMareLog").setCreativeTab(CreativeTabs.tabBlock);
-		nightmarePortal = (BlockPortalNightmare) (new BlockPortalNightmare(216).setHardness(0F).setResistance(0F).setBlockName("NightMarePortal").setCreativeTab(CreativeTabs.tabBlock));
-		
-		
-		GameRegistry.registerBlock(nightmareGrass);
-		GameRegistry.registerBlock(nightmareBed);
-		GameRegistry.registerBlock(nightmarePortal);
-		GameRegistry.registerBlock(nightmareStone);
-		GameRegistry.registerBlock(nightmareLog);
-		GameRegistry.registerBlock(nightmareLeaf);
-		
-		
+		MinecraftForgeClient.preloadTexture("/Blocks/NightmareTextures.png");
+		addNames();
+		addRecipes();
+		registerBlocks();
+		registerEntities();
+		addSpawns();
+		DimensionAPI.registerDimension(new WorldProviderNightmare());
+	}
+	
+	public void addNames()
+	{
 		LanguageRegistry.addName(nightmareTeleportStick, "Nightmare Teleport Stick");
 		LanguageRegistry.addName(nightmareItem, "Nightmare Item");
 		LanguageRegistry.addName(nightmareBed, "Nightmare Bed");
@@ -74,22 +75,32 @@ public class mod_Nightmare
 		LanguageRegistry.addName(nightmareStone, "Nightmare Stone");
 		LanguageRegistry.addName(nightmareLog, "Nightmare Log");
 		LanguageRegistry.addName(nightmareLeaf, "Nightmare Leaf");
+	}
+	
+	public void addRecipes()
+	{
 		
-		
-		logTop = ModLoader.addOverride("/terrain.png", "/Blocks/nightmareLogTop.png");
-		logSide = ModLoader.addOverride("/terrain.png", "/Blocks/nightmareLogSide.png");
-		grassTop = ModLoader.addOverride("/terrain.png", "/Blocks/nightmareGrassTop.png");
-		grassSide = ModLoader.addOverride("/terrain.png", "/Blocks/nightmareGrassSide.png");
-		forbiddenGrassBottom = ModLoader.addOverride("/terrain.png", "/Blocks/nightmareGrassBottom.png");
-		
-		
+	}
+	
+	public void registerBlocks()
+	{
+		GameRegistry.registerBlock(nightmareGrass);
+		GameRegistry.registerBlock(nightmareBed);
+		GameRegistry.registerBlock(nightmarePortal);
+		GameRegistry.registerBlock(nightmareStone);
+		GameRegistry.registerBlock(nightmareLog);
+		GameRegistry.registerBlock(nightmareLeaf);
+	}
+	
+	public void registerEntities()
+	{
 		ModLoader.registerEntityID(EntityBiped.class, "BipedGuy", ModLoader.getUniqueEntityId());
+	}
+	
+	public void addSpawns()
+	{
 		ModLoader.addSpawn("BipedGuy", 1, 1, 5, EnumCreatureType.monster, new BiomeGenBase[]{
 				BiomeGenNightmare.ForbiddenForest
 		});
-		
-		
-		DimensionAPI.registerDimension(new WorldProviderNightmare());
 	}
-	
 }

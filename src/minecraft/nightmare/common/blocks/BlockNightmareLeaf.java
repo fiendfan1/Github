@@ -1,7 +1,8 @@
-package nightmare.common;
+package nightmare.common.blocks;
 import java.util.Random;
 
 import net.minecraft.src.*;
+import nightmare.common.mod_Nightmare;
 
 public class BlockNightmareLeaf extends BlockLeavesBase{
 	private int baseIndexInPNG;
@@ -10,12 +11,17 @@ public class BlockNightmareLeaf extends BlockLeavesBase{
     
     
     
-    protected BlockNightmareLeaf(int i, int j)
+    public BlockNightmareLeaf(int i, int j)
     {
         super(i, j, Material.leaves, false);
         //baseIndexInPNG = j;   - Not needed
         setTickRandomly(true);
     }
+    
+    public String getTextureFile()
+	{
+		return "/Blocks/NightmareTextures.png";
+	}
     
     public int getBlockColor()
     {

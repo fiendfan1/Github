@@ -1,10 +1,11 @@
-package nightmare.common;
+package nightmare.common.world;
 import java.util.Random;
 
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldGenerator;
+import nightmare.common.mod_Nightmare;
 
 public class WorldGenNightmare2 extends WorldGenerator
 {

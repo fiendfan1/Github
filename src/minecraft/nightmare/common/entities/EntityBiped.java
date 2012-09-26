@@ -1,4 +1,4 @@
-package nightmare.common;
+package nightmare.common.entities;
 import net.minecraft.src.EntityAIAttackOnCollide;
 import net.minecraft.src.EntityAIBreakDoor;
 import net.minecraft.src.EntityAIHurtByTarget;

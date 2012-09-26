@@ -1,4 +1,4 @@
-package nightmare.common;
+package nightmare.common.blocks;
 
 import net.minecraft.src.*;
 import cpw.mods.fml.common.Side;
@@ -314,4 +314,9 @@ public class BlockBed extends BlockDirectional
     {
         return Item.bed.shiftedIndex;
     }
+    
+    public String getTextureFile()
+	{
+		return "/Blocks/NightmareTextures.png";
+	}
 }

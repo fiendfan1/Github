@@ -1,9 +1,11 @@
-package nightmare.common;
+package nightmare.common.blocks;
 import java.util.Random;
 
 import net.minecraft.src.*;
+import nightmare.common.NightmareBlock;
+import nightmare.common.mod_Nightmare;
 
-public class BlockNightmareGrass extends Block{
+public class BlockNightmareGrass extends NightmareBlock{
 
 	public BlockNightmareGrass(int par1, int par2) 
 	{
@@ -49,35 +51,17 @@ public class BlockNightmareGrass extends Block{
         }
     }
 
-    public int getBlockTextureFromSideAndMetadata (int i, int j)
+    public int getBlockTextureFromSide (int i)
     {
     	
     	if (i == 0)
     		
-    		return mod_Nightmare.grassSide;
+    		return this.blockIndexInTexture;
     	if (i == 1)
     		
-    		return mod_Nightmare.grassTop;
-    	
-    	if (i == 2)
-    		
-    		return mod_Nightmare.grassSide;
-    	if (i == 3)
-    		
-    		return mod_Nightmare.grassSide;
-    	if (i == 4)
-	
-    		return mod_Nightmare.grassSide;
-    	if (i == 5)
-	
-    		return mod_Nightmare.grassSide;
-   
-    	if (j ==1)
-    	{
-    		return 166;
-    	}
-    
-    		return j != 2 ? 20 : 177;
+    		return this.blockIndexInTexture +2;
+    	else
+    		return this.blockIndexInTexture +1;
     }
 
 }

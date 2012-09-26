@@ -1,4 +1,4 @@
-package nightmare.common;
+package nightmare.common.world;
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.WorldChunkManager;
